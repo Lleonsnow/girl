@@ -1,0 +1,66 @@
+body {
+    background: #0a0a0a;
+}
+
+.admin-login-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.admin-login-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(-45deg,
+        rgba(60, 199, 122, 0.15),
+        rgba(62, 207, 207, 0.12),
+        rgba(99, 149, 255, 0.18),
+        rgba(185, 124, 219, 0.16),
+        rgba(60, 199, 122, 0.25));
+    background-size: 400% 400%;
+    animation: adminChameleonColors 15s ease infinite;
+    filter: blur(80px) brightness(0.8) saturate(1.5);
+}
+
+@keyframes adminChameleonColors {
+    0% { background-position: 0% 50%; }
+    25% { background-position: 50% 50%; }
+    50% { background-position: 100% 50%; }
+    75% { background-position: 50% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+#particles-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.bg-primary-600,
+button.bg-primary-600,
+[class*="bg-primary"] {
+    background: linear-gradient(135deg, #3cc77a, #6395ff) !important;
+}
+
+.bg-primary-600:hover,
+button.bg-primary-600:hover {
+    background: linear-gradient(135deg, #45d986, #7aa3ff) !important;
+}
+
+input::placeholder {
+    color: transparent;
+}
+
+input:focus, [type="text"]:focus, [type="password"]:focus, [type="email"]:focus {
+    --tw-ring-color: rgba(60, 199, 122, 0.4);
+}
+

@@ -1,0 +1,60 @@
+services:
+  nginx:
+    profiles:
+      - prod
+    build: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - static_files:/var/www/static:ro
+    depends_on:
+      - backend
+      - frontend
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_DB=girl
+      - POSTGRES_USER=girl
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-girl}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U girl -d girl"]
+      interval: 2s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - static_files:/app/staticfiles
+    env_file: ./backend/.env
+    environment:
+      - DJANGO_DEBUG=1
+      - CORS_ALLOWED_ORIGINS=http://localhost,http://127.0.0.1,http://localhost:3000,http://127.0.0.1:3000
+      - POSTGRES_HOST=postgres
+      - POSTGRES_DB=girl
+      - POSTGRES_USER=girl
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-girl}
+      - DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME:-admin}
+      - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL:-admin@local}
+      - DJANGO_SUPERUSER_PASSWORD=${DJANGO_SUPERUSER_PASSWORD:-admin}
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    profiles:
+      - prod
+    build: ./frontend
+    environment:
+      - NUXT_PUBLIC_API_BASE=
+    depends_on:
+      - backend
+
+volumes:
+  static_files:
+  postgres_data:
