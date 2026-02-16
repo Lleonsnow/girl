@@ -1,0 +1,17 @@
+@use "variables" as *;
+
+.my-container {
+  width: 100%;
+  min-width: 320px;
+  max-width: $width-desktop-max;
+  margin: 0 auto;
+  padding: 0 50px;
+
+  @media (max-width: $width-desktop) {
+    padding: 0 25px;
+  }
+
+  @media (max-width: $width-tablet) {
+    padding: 0 15px;
+  }
+}

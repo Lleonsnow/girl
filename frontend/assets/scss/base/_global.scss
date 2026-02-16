@@ -1,0 +1,47 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+html {
+  box-sizing: border-box;
+  font-family: $font-lato;
+  color: $color-text;
+  scroll-behavior: smooth;
+  @include fontMeasure(400, 16px, 18px);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+a {
+  color: $color-text;
+  text-decoration: none;
+}
+
+select {
+  cursor: pointer;
+  -webkit-appearance: button !important;
+}
+
+*::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: lightgray;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba($color-main, 0.7);
+}
+
+@media print {
+  header,
+  footer {
+    display: none;
+  }
+
+  .noprint {
+    display: none !important;
+  }
+}
