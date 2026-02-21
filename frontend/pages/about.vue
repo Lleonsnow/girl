@@ -1,9 +1,13 @@
 <template>
   <div class="my-container page">
-    <h1 class="page__title">Обо мне</h1>
-    <p class="page__text">Страница в разработке.</p>
+    <h1 class="page__title">{{ t('pages.aboutTitle') }}</h1>
+    <p class="page__text">{{ t('pages.devText') }}</p>
   </div>
 </template>
+
+<script setup lang="ts">
+const { t } = useI18n()
+</script>
 
 <style lang="scss" scoped>
 .page {

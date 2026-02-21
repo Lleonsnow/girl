@@ -4,9 +4,8 @@
   font-weight: 300;
   font-display: swap;
   src: local("Lato Light"),
-    url("/fonts/lato-300.woff2") format("woff2"),
-    url("/fonts/lato-300.woff") format("woff"),
-    url("/fonts/lato-300.ttf") format("truetype");
+    url("../../fonts/lato-300.woff2") format("woff2"),
+    url("../../fonts/lato-300.woff") format("woff");
 }
 
 @font-face {
@@ -15,9 +14,8 @@
   font-weight: 400;
   font-display: swap;
   src: local("Lato Regular"),
-    url("/fonts/lato-regular.woff2") format("woff2"),
-    url("/fonts/lato-regular.woff") format("woff"),
-    url("/fonts/lato-regular.ttf") format("truetype");
+    url("../../fonts/lato-regular.woff2") format("woff2"),
+    url("../../fonts/lato-regular.woff") format("woff");
 }
 
 @font-face {
@@ -26,7 +24,6 @@
   font-weight: 700;
   font-display: swap;
   src: local("Lato Bold"),
-    url("/fonts/lato-700.woff2") format("woff2"),
-    url("/fonts/lato-700.woff") format("woff"),
-    url("/fonts/lato-700.ttf") format("truetype");
+    url("../../fonts/lato-700.woff2") format("woff2"),
+    url("../../fonts/lato-700.woff") format("woff");
 }

@@ -6,99 +6,99 @@
 
 @mixin headingBaseStyle($headingOrder) {
   @if $headingOrder == h1 {
-    font-size: 28px;
+    font-size: 31px;
     font-weight: 700;
-    line-height: 36px;
-    letter-spacing: -0.84px;
+    line-height: 40px;
+    letter-spacing: -0.93px;
   } @else if $headingOrder == h1-error {
-    font-size: 46px;
+    font-size: 52px;
     font-weight: 700;
-    line-height: 48px;
-    letter-spacing: -1.38px;
+    line-height: 54px;
+    letter-spacing: -1.56px;
   } @else if $headingOrder == h2 {
-    font-size: 24px;
+    font-size: 27px;
     font-weight: 700;
-    line-height: 28px;
-    letter-spacing: -0.48px;
+    line-height: 31px;
+    letter-spacing: -0.54px;
   } @else if $headingOrder == h3 {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 31px;
+    letter-spacing: -0.44px;
+  } @else if $headingOrder == h4 {
     font-size: 20px;
     font-weight: 600;
-    line-height: 28px;
+    line-height: 27px;
     letter-spacing: -0.4px;
-  } @else if $headingOrder == h4 {
+  } @else if $headingOrder == text {
     font-size: 18px;
     font-weight: 600;
-    line-height: 24px;
+    line-height: 25px;
     letter-spacing: -0.36px;
-  } @else if $headingOrder == text {
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 22px;
-    letter-spacing: -0.32px;
   } @else if $headingOrder == text-thin {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 25px;
+    letter-spacing: -0.36px;
+  } @else if $headingOrder == text-small {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 18px;
+    letter-spacing: -0.32px;
+  } @else if $headingOrder == text-small-thin {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: -0.32px;
+  } @else if $headingOrder == text-super-small {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 18px;
+    letter-spacing: -0.26px;
+  } @else if $headingOrder == text-super-small-thin {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: -0.26px;
+  } @else if $headingOrder == article {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 27px;
+    letter-spacing: -0.36px;
+  } @else if $headingOrder == article-small {
     font-size: 16px;
     font-weight: 500;
     line-height: 22px;
     letter-spacing: -0.32px;
-  } @else if $headingOrder == text-small {
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 16px;
-    letter-spacing: -0.28px;
-  } @else if $headingOrder == text-small-thin {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 16px;
-    letter-spacing: -0.28px;
-  } @else if $headingOrder == text-super-small {
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 16px;
-    letter-spacing: -0.24px;
-  } @else if $headingOrder == text-super-small-thin {
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 16px;
-    letter-spacing: -0.24px;
-  } @else if $headingOrder == article {
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 24px;
-    letter-spacing: -0.32px;
-  } @else if $headingOrder == article-small {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 20px;
-    letter-spacing: -0.28px;
   } @else if $headingOrder == label {
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 600;
-    line-height: 12px;
-    letter-spacing: -0.1px;
+    line-height: 13px;
+    letter-spacing: -0.11px;
   } @else if $headingOrder == label-thin {
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 500;
-    line-height: 12px;
-    letter-spacing: -0.1px;
+    line-height: 13px;
+    letter-spacing: -0.11px;
   } @else if $headingOrder == article-bold {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 27px;
+    letter-spacing: -0.36px;
+  } @else if $headingOrder == article-small-bold {
     font-size: 16px;
     font-weight: 600;
-    line-height: 24px;
+    line-height: 22px;
     letter-spacing: -0.32px;
-  } @else if $headingOrder == article-small-bold {
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 20px;
-    letter-spacing: -0.28px;
   } @else if $headingOrder == article-small-thin {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 400;
-    line-height: 20px;
-    letter-spacing: -0.28px;
-  } @else if $headingOrder == number-count-small {
-    font-size: 8px;
-    font-weight: 500;
-    line-height: 14px;
+    line-height: 22px;
     letter-spacing: -0.32px;
+  } @else if $headingOrder == number-count-small {
+    font-size: 9px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: -0.36px;
   }
 }

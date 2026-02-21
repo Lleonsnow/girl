@@ -6,7 +6,12 @@ html {
   font-family: $font-lato;
   color: $color-text;
   scroll-behavior: smooth;
-  @include fontMeasure(400, 16px, 18px);
+  overflow-x: hidden;
+  @include fontMeasure(400, 18px, 20px);
+}
+
+body {
+  overflow-x: hidden;
 }
 
 *,
