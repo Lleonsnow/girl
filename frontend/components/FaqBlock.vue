@@ -13,7 +13,9 @@
           <span class="faq__question">{{ item.question }}</span>
           <span class="faq__icon" aria-hidden="true">{{ openSet.has(i) ? '−' : '+' }}</span>
           <div class="faq__answer-wrap">
-            <p class="faq__answer">{{ item.answer }}</p>
+            <div class="faq__answer-inner">
+              <p class="faq__answer">{{ item.answer || '\u00A0' }}</p>
+            </div>
           </div>
         </button>
       </div>
@@ -110,9 +112,13 @@ function toggle(i: number) {
   grid-template-rows: 1fr;
 }
 
-.faq__answer {
+.faq__answer-inner {
   min-height: 0;
   overflow: hidden;
+}
+
+.faq__answer {
+  min-height: 4rem;
   @include headingBaseStyle(article);
   color: $color-text;
   margin: 1rem 0 0;
