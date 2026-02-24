@@ -5,8 +5,8 @@
       <section class="policy-section">
         <h2 class="policy-section__title">{{ t('privacy.s1Title') }}</h2>
         <p>{{ t('privacy.s1P1') }}</p>
-        <p>{{ t('privacy.s1P2') }}</p>
-        <p>{{ t('privacy.s1P3') }}</p>
+        <p>{{ t('privacy.s1P2', { siteOwner: siteConfig.siteOwnerNameLocalized }) }}</p>
+        <p>{{ t('privacy.s1P3', { siteUrl: siteConfig.siteUrl }) }}</p>
         <p>{{ t('privacy.s1P4') }}</p>
       </section>
       <section class="policy-section">
@@ -51,7 +51,7 @@
         <ul>
           <li v-for="i in 3" :key="i">{{ t(`privacy.s7Li${i}`) }}</li>
         </ul>
-        <p>{{ t('privacy.s7P2') }} <a href="mailto:contactEmail">{{ contactEmail }}</a></p>
+        <p>{{ t('privacy.s7P2') }} <a :href="'mailto:' + siteConfig.siteContactEmail">{{ siteConfig.siteContactEmail }}</a></p>
       </section>
       <section class="policy-section">
         <h2 class="policy-section__title">{{ t('privacy.s8Title') }}</h2>
@@ -63,7 +63,7 @@
 
 <script setup lang="ts">
 const { t } = useI18n()
-const contactEmail = 'my.admin-anesthesia@duck.com'
+const siteConfig = useSiteConfigStore()
 </script>
 
 <style lang="scss" scoped>
