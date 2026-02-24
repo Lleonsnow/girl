@@ -64,7 +64,8 @@ import { getSocialLinks } from '~/utils/socials'
 
 const { t } = useI18n()
 const localePath = useLocalePath()
-const socialLinks = getSocialLinks()
+const siteConfig = useSiteConfigStore()
+const socialLinks = computed(() => getSocialLinks(siteConfig.socialOverrides))
 
 const IconHome = () => h('svg', { class: 'side-menu__svg', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, [
   h('path', { d: 'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z' }),

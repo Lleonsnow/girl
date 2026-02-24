@@ -6,7 +6,7 @@
       style="position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:#2d3328"
     >
       <div class="loading-banner__inner">
-        <h1 class="loading-banner__title">My Anesthesia</h1>
+        <h1 class="loading-banner__title">{{ siteConfig.authorPseudonym }}</h1>
         <div class="loading-banner__line">
           <span class="loading-banner__line-fill" />
         </div>
@@ -16,6 +16,7 @@
 </template>
 
 <script setup lang="ts">
+const siteConfig = useSiteConfigStore()
 const props = withDefaults(
   defineProps<{ loading?: boolean }>(),
   { loading: true }
