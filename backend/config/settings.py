@@ -99,6 +99,21 @@ CSRF_TRUSTED_ORIGINS = os.environ.get(
     'http://localhost,http://127.0.0.1,http://localhost:3000,http://127.0.0.1:3000'
 ).split(',')
 
+AUTHOR_NAME = os.environ.get('AUTHOR_NAME', '')
+AUTHOR_PSEUDONYM = os.environ.get('AUTHOR_PSEUDONYM', '')
+AUTHOR_EMAIL = os.environ.get('AUTHOR_EMAIL', '')
+AUTHOR_SOCIAL_TELEGRAM = os.environ.get('AUTHOR_SOCIAL_TELEGRAM', '')
+AUTHOR_SOCIAL_INSTAGRAM = os.environ.get('AUTHOR_SOCIAL_INSTAGRAM', '')
+AUTHOR_SOCIAL_TIKTOK = os.environ.get('AUTHOR_SOCIAL_TIKTOK', '')
+AUTHOR_SOCIAL_TWITCH = os.environ.get('AUTHOR_SOCIAL_TWITCH', '')
+AUTHOR_SOCIAL_YOUTUBE = os.environ.get('AUTHOR_SOCIAL_YOUTUBE', '')
+AUTHOR_SOCIAL_DISCORD = os.environ.get('AUTHOR_SOCIAL_DISCORD', '')
+AUTHOR_SOCIAL_BOOSTY = os.environ.get('AUTHOR_SOCIAL_BOOSTY', '')
+SITE_URL = os.environ.get('SITE_URL', '')
+SITE_OWNER_NAME = os.environ.get('SITE_OWNER_NAME', '')
+SITE_OWNER_NAME_EN = os.environ.get('SITE_OWNER_NAME_EN', '')
+SITE_CONTACT_EMAIL = os.environ.get('SITE_CONTACT_EMAIL', '')
+
 UNFOLD = {
     'SITE_TITLE': 'Admin',
     'SITE_HEADER': 'Admin',
