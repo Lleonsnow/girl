@@ -7,19 +7,17 @@
       aria-hidden="true"
     >
       <div class="loading-cover__inner">
-        <h1 class="loading-cover__title">My Anesthesia</h1>
+        <h1 class="loading-cover__title">{{ footerSiteName }}</h1>
         <div class="loading-cover__line"><span class="loading-cover__line-fill" /></div>
       </div>
     </div>
     <ClientOnly>
-      <template v-if="cookieStore.accepted">
-        <NuxtLayout>
-          <NuxtPage />
-        </NuxtLayout>
-        <TheFooter :site-name="t('siteName')" :links="footerLinks" />
-      </template>
-      <template v-else>
-        <div class="cookie-gate" />
+      <NuxtLayout>
+        <NuxtPage />
+      </NuxtLayout>
+      <TheFooter v-if="cookieStore.accepted" :site-name="footerSiteName" :links="footerLinks" />
+      <template v-if="!cookieStore.accepted">
+        <div class="cookie-overlay" aria-hidden="true" />
         <CookieBanner />
       </template>
       <template #fallback>
@@ -35,6 +33,8 @@ const router = useRouter()
 const { t } = useI18n()
 const localePath = useLocalePath()
 const cookieStore = useCookieConsentStore()
+const siteConfig = useSiteConfigStore()
+const footerSiteName = computed(() => siteConfig.authorPseudonym || t('siteName'))
 const footerLinks = computed(() => [
   { to: localePath('/privacy'), label: t('home.footerPrivacy') },
   { to: localePath('/terms'), label: t('home.footerAgreement') },
@@ -51,6 +51,7 @@ function removeLoadingCover() {
 
 onMounted(() => {
   useCookieConsentStore().syncFromStorage()
+  useSiteConfigStore().fetchConfig()
   const started = Date.now()
   Promise.all([
     router.isReady(),
@@ -92,6 +93,16 @@ onMounted(() => {
   inset: 0;
   background: $color-bg-dark;
   z-index: 99989;
+}
+
+.cookie-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba($color-bg-dark, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 99989;
+  pointer-events: auto;
 }
 </style>
 
