@@ -21,7 +21,7 @@ const { accept } = cookieStore
 <style lang="scss" scoped>
 .cookie-banner {
   position: fixed;
-  bottom: 0;
+  bottom: 1.5rem;
   left: 50%;
   transform: translateX(-50%);
   width: 70%;
@@ -35,7 +35,7 @@ const { accept } = cookieStore
   background: $color-bg;
   border: 1px solid $color-accent;
   border-bottom: none;
-  border-radius: 12px 12px 0 0;
+  border-radius: 12px;
   box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.2);
   z-index: 99990;
 }
