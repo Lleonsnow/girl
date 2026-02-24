@@ -3,7 +3,7 @@
     <div class="hero__photo-wrap">
       <img v-if="src" :src="src" alt="" class="hero__photo" />
       <div v-else class="hero__photo hero__photo--placeholder" />
-      <h1 class="hero__title" :class="{ 'hero__title--visible': showTitle }">{{ brandName }}</h1>
+      <h1 class="hero__title" :class="{ 'hero__title--visible': showTitle }">{{ displayName }}</h1>
     </div>
     <div class="hero__socials">
       <SocialIcons :url-overrides="urlOverrides" />
@@ -14,14 +14,16 @@
 <script setup lang="ts">
 import type { SocialId } from '~/utils/socials'
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     src?: string
     brandName?: string
     urlOverrides?: Partial<Record<SocialId, string>>
   }>(),
-  { brandName: 'My Anesthesia' }
+  { brandName: '' }
 )
+const siteConfig = useSiteConfigStore()
+const displayName = computed(() => props.brandName || siteConfig.authorPseudonym)
 
 const showTitle = ref(false)
 let titleTimer: ReturnType<typeof setTimeout>
