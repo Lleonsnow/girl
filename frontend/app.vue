@@ -34,7 +34,7 @@ const { t } = useI18n()
 const localePath = useLocalePath()
 const cookieStore = useCookieConsentStore()
 const siteConfig = useSiteConfigStore()
-const footerSiteName = computed(() => siteConfig.authorPseudonym || t('siteName'))
+const footerSiteName = computed(() => siteConfig.authorPseudonym || t('siteName', { author: siteConfig.authorPseudonym }))
 const footerLinks = computed(() => [
   { to: localePath('/privacy'), label: t('home.footerPrivacy') },
   { to: localePath('/terms'), label: t('home.footerAgreement') },

@@ -8,7 +8,7 @@
             <div v-else class="discount-popup__photo discount-popup__photo--placeholder" />
           </div>
           <div class="discount-popup__body">
-            <h2 class="discount-popup__title">{{ t('idle.title') }}</h2>
+            <h2 class="discount-popup__title">{{ t('idle.title', { author: siteConfig.authorPseudonym }) }}</h2>
             <p class="discount-popup__text">{{ t('idle.text') }}</p>
             <p class="discount-popup__sub">{{ t('idle.sub') }}</p>
             <a

@@ -8,7 +8,7 @@
             <div v-else class="idle-popup__photo idle-popup__photo--placeholder" />
           </div>
           <div class="idle-popup__body">
-            <h2 class="idle-popup__title">{{ t('idle.title') }}</h2>
+            <h2 class="idle-popup__title">{{ t('idle.title', { author: siteConfig.authorPseudonym }) }}</h2>
             <p class="idle-popup__text">{{ t('idle.text') }}</p>
             <p class="idle-popup__sub">{{ t('idle.sub') }}</p>
             <button type="button" class="idle-popup__btn" @click="close">
@@ -23,6 +23,7 @@
 
 <script setup lang="ts">
 const { t } = useI18n()
+const siteConfig = useSiteConfigStore()
 const SESSION_KEY = 'idlePopupShown'
 
 const props = withDefaults(
