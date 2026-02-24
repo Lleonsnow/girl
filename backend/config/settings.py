@@ -9,7 +9,7 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'dev-secret-change-in-production')
-ADMIN_SECRET_KEY = os.environ.get('ADMIN_SECRET_KEY', '')
+ADMIN_SECRET_KEY = (os.environ.get('ADMIN_SECRET_KEY') or '').strip().strip("'").strip('"')
 
 DEBUG = os.environ.get('DJANGO_DEBUG', '1') == '1'
 
