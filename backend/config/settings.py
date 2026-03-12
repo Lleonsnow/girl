@@ -88,16 +88,29 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static'] if (BASE_DIR / 'static').exists() else []
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/admin/'
 
-CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', 'http://localhost:3000,http://127.0.0.1:3000').split(',')
-CSRF_TRUSTED_ORIGINS = os.environ.get(
-    'CSRF_TRUSTED_ORIGINS',
-    'http://localhost,http://127.0.0.1,http://localhost:3000,http://127.0.0.1:3000'
-).split(',')
+def _split_origins(env_val: str, default: str) -> list:
+    return [x.strip() for x in (env_val or default).split(',') if x.strip()]
+
+_cors_default = 'http://localhost:3000,http://127.0.0.1:3000'
+CORS_ALLOWED_ORIGINS = _split_origins(os.environ.get('CORS_ALLOWED_ORIGINS'), _cors_default)
+if os.environ.get('SITE_ORIGIN', '').strip():
+    site_origin = os.environ.get('SITE_ORIGIN', '').strip()
+    if site_origin not in CORS_ALLOWED_ORIGINS:
+        CORS_ALLOWED_ORIGINS = [*CORS_ALLOWED_ORIGINS, site_origin]
+
+_csrf_default = 'http://localhost,http://127.0.0.1,http://localhost:3000,http://127.0.0.1:3000'
+CSRF_TRUSTED_ORIGINS = _split_origins(os.environ.get('CSRF_TRUSTED_ORIGINS'), _csrf_default)
+if os.environ.get('SITE_ORIGIN', '').strip():
+    so = os.environ.get('SITE_ORIGIN', '').strip()
+    if so not in CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS = [*CSRF_TRUSTED_ORIGINS, so]
 
 AUTHOR_NAME = os.environ.get('AUTHOR_NAME', '')
 AUTHOR_PSEUDONYM = os.environ.get('AUTHOR_PSEUDONYM', '')
@@ -109,14 +122,17 @@ AUTHOR_SOCIAL_TWITCH = os.environ.get('AUTHOR_SOCIAL_TWITCH', '')
 AUTHOR_SOCIAL_YOUTUBE = os.environ.get('AUTHOR_SOCIAL_YOUTUBE', '')
 AUTHOR_SOCIAL_DISCORD = os.environ.get('AUTHOR_SOCIAL_DISCORD', '')
 AUTHOR_SOCIAL_BOOSTY = os.environ.get('AUTHOR_SOCIAL_BOOSTY', '')
-SITE_URL = os.environ.get('SITE_URL', '')
+SITE_ORIGIN = os.environ.get('SITE_ORIGIN', '')
 SITE_OWNER_NAME = os.environ.get('SITE_OWNER_NAME', '')
 SITE_OWNER_NAME_EN = os.environ.get('SITE_OWNER_NAME_EN', '')
 SITE_CONTACT_EMAIL = os.environ.get('SITE_CONTACT_EMAIL', '')
 
+_site_origin = SITE_ORIGIN or 'http://localhost:3000'
 UNFOLD = {
     'SITE_TITLE': 'Admin',
     'SITE_HEADER': 'Admin',
+    'SITE_ORIGIN': _site_origin,
+    'SITE_URL': _site_origin,
     'THEME': 'dark',
     'BORDER_RADIUS': '12px',
     'COLORS': {
