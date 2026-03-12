@@ -7,7 +7,7 @@
           <p class="page__text">{{ t('about.bioIntro') || t('pages.devText') }}</p>
         </div>
         <div class="about-hero__photo-col">
-          <img src="/main/main.jpg" alt="" class="about-hero__img" width="480" height="480" />
+          <img :src="siteConfig.heroImage" alt="" class="about-hero__img" width="480" height="480" />
           <p class="about-hero__credo">{{ t('about.credo') }}</p>
         </div>
       </section>
@@ -20,7 +20,7 @@
         <CtaBlock
       :text="t('home.ctaText')"
       :button-label="t('home.ctaButton')"
-      thumb-src="/main/miniature.jpg"
+      :thumb-src="siteConfig.miniatureImage"
       :open-popup="true"
       @cta-click="showDiscountPopup = true"
         />
@@ -28,7 +28,7 @@
     </div>
     <DiscountPopup
       v-model:visible="showDiscountPopup"
-      :image-src="heroImage"
+      :image-src="siteConfig.heroImage"
       :boosty-url="siteConfig.boostyUrl"
     />
   </div>
@@ -38,7 +38,6 @@
 const { t } = useI18n()
 const siteConfig = useSiteConfigStore()
 const showDiscountPopup = ref(false)
-const heroImage = '/main/main.jpg'
 </script>
 
 <style lang="scss" scoped>

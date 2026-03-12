@@ -31,9 +31,10 @@ defineEmits<{ (e: 'cta-click'): void }>()
 </script>
 
 <style lang="scss" scoped>
+@use "sass:color";
 .cta-block {
   padding: 1.5rem 0;
-  background: mix($color-pistachio, $color-bg, 18%);
+  background: color.mix($color-pistachio, $color-bg, 18%);
   border-radius: 8px;
 }
 

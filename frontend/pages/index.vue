@@ -1,20 +1,20 @@
 <template>
   <div class="home">
     <ClientOnly>
-      <IdlePopup :image-src="heroImage" />
+      <IdlePopup :image-src="siteConfig.heroImage" />
       <template #fallback><span /></template>
     </ClientOnly>
-    <HomeHero :src="heroImage" :brand-name="siteConfig.authorPseudonym" :url-overrides="siteConfig.socialOverrides" />
+    <HomeHero :src="siteConfig.heroImage" :brand-name="siteConfig.authorPseudonym" :url-overrides="siteConfig.socialOverrides" />
     <CtaBlock
       :text="t('home.ctaText')"
       :button-label="t('home.ctaButton')"
-      thumb-src="/main/miniature.jpg"
+      :thumb-src="siteConfig.miniatureImage"
       :open-popup="true"
       @cta-click="showDiscountPopup = true"
     />
     <DiscountPopup
       v-model:visible="showDiscountPopup"
-      :image-src="heroImage"
+      :image-src="siteConfig.heroImage"
       :boosty-url="siteConfig.boostyUrl"
     />
     <SocialGrid :items="socialGridItems" />
@@ -40,12 +40,27 @@ const socialGridItems = computed(() =>
   }))
 )
 
-const heroImage = '/main/main.jpg'
 const allCarousel = Array.from({ length: 11 }, (_, i) => `/carousel/${i + 1}.jpg`)
-const carouselSlides = ref<string[]>([])
+const fallbackCarousel = ref<string[]>([])
+const displaySlides = ref<string[]>([])
+
+function shuffleAndTake8(arr: string[]) {
+  return [...arr].sort(() => Math.random() - 0.5).slice(0, 8)
+}
+
+watch(
+  () => siteConfig.carouselImages,
+  (imgs) => {
+    if (imgs?.length) displaySlides.value = shuffleAndTake8(imgs)
+  },
+  { immediate: true }
+)
 onMounted(() => {
-  carouselSlides.value = [...allCarousel].sort(() => Math.random() - 0.5).slice(0, 8)
+  fallbackCarousel.value = shuffleAndTake8(allCarousel)
 })
+const carouselSlides = computed(() =>
+  displaySlides.value.length ? displaySlides.value : fallbackCarousel.value
+)
 
 const faqItems = computed(() => {
   const a = siteConfig.authorPseudonym

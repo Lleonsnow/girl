@@ -18,7 +18,7 @@
         <CtaBlock
       :text="t('home.ctaText')"
       :button-label="t('home.ctaButton')"
-      thumb-src="/main/miniature.jpg"
+      :thumb-src="siteConfig.miniatureImage"
       :open-popup="true"
       @cta-click="showDiscountPopup = true"
         />
@@ -26,7 +26,7 @@
     </div>
     <DiscountPopup
       v-model:visible="showDiscountPopup"
-      :image-src="heroImage"
+      :image-src="siteConfig.heroImage"
       :boosty-url="siteConfig.boostyUrl"
     />
   </div>
@@ -45,11 +45,12 @@
 
 <script setup lang="ts">
 const { t } = useI18n()
-const photoSlides = Array.from({ length: 11 }, (_, i) => `/photos/${i + 1}.jpg`)
-const lightboxSrc = ref<string | null>(null)
 const siteConfig = useSiteConfigStore()
+const photoSlides = computed(() =>
+  siteConfig.photoImages.length ? siteConfig.photoImages : Array.from({ length: 11 }, (_, i) => `/photos/${i + 1}.jpg`)
+)
+const lightboxSrc = ref<string | null>(null)
 const showDiscountPopup = ref(false)
-const heroImage = '/main/main.jpg'
 
 function onKeydown(e: KeyboardEvent) {
   if (e.key === 'Escape') lightboxSrc.value = null

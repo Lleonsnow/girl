@@ -10,6 +10,13 @@ export interface SiteConfigSocial {
   boosty: string
 }
 
+export interface SiteConfigImages {
+  hero: string | null
+  miniature: string | null
+  carousel: string[]
+  photo: string[]
+}
+
 export interface SiteConfigState {
   authorName: string
   authorPseudonym: string
@@ -19,6 +26,7 @@ export interface SiteConfigState {
   siteOwnerNameEn: string
   siteContactEmail: string
   social: SiteConfigSocial
+  images: SiteConfigImages
 }
 
 const defaultSocial: SiteConfigSocial = {
@@ -31,6 +39,13 @@ const defaultSocial: SiteConfigSocial = {
   boosty: '',
 }
 
+const defaultImages: SiteConfigImages = {
+  hero: null,
+  miniature: null,
+  carousel: [],
+  photo: [],
+}
+
 function defaultState(): SiteConfigState {
   return {
     authorName: '',
@@ -41,6 +56,7 @@ function defaultState(): SiteConfigState {
     siteOwnerNameEn: '',
     siteContactEmail: '',
     social: { ...defaultSocial },
+    images: { ...defaultImages },
   }
 }
 
@@ -62,6 +78,11 @@ export const useSiteConfigStore = defineStore('siteConfig', () => {
   )
   const siteContactEmail = computed(() => state.value.siteContactEmail)
   const social = computed(() => state.value.social)
+  const images = computed(() => state.value.images)
+  const heroImage = computed(() => state.value.images.hero || '/main/main.jpg')
+  const miniatureImage = computed(() => state.value.images.miniature || '/main/miniature.jpg')
+  const carouselImages = computed(() => state.value.images.carousel)
+  const photoImages = computed(() => state.value.images.photo)
 
   const socialOverrides = computed((): Partial<Record<SocialId, string>> => {
     const s = state.value.social
@@ -81,8 +102,11 @@ export const useSiteConfigStore = defineStore('siteConfig', () => {
   async function fetchConfig() {
     if (!import.meta.client || !apiBase) return
     try {
-      const res = await $fetch<SiteConfigState>(`${apiBase}/api/site-config/`, { credentials: 'omit' })
+      const res = await $fetch<SiteConfigState & { images?: SiteConfigImages }>(`${apiBase}/api/site-config/`, {
+        credentials: 'omit',
+      })
       const def = defaultState()
+      const im = res.images ?? defaultImages
       state.value = {
         authorName: res.authorName ?? '',
         authorPseudonym: res.authorPseudonym ?? def.authorPseudonym,
@@ -92,6 +116,12 @@ export const useSiteConfigStore = defineStore('siteConfig', () => {
         siteOwnerNameEn: (res as SiteConfigState).siteOwnerNameEn ?? def.siteOwnerNameEn,
         siteContactEmail: res.siteContactEmail ?? def.siteContactEmail,
         social: { ...defaultSocial, ...res.social },
+        images: {
+          hero: im.hero ?? null,
+          miniature: im.miniature ?? null,
+          carousel: Array.isArray(im.carousel) ? im.carousel : [],
+          photo: Array.isArray(im.photo) ? im.photo : [],
+        },
       }
     } catch (_) {}
   }
@@ -109,6 +139,11 @@ export const useSiteConfigStore = defineStore('siteConfig', () => {
     social,
     socialOverrides,
     boostyUrl,
+    images,
+    heroImage,
+    miniatureImage,
+    carouselImages,
+    photoImages,
     fetchConfig,
   }
 })

@@ -6,12 +6,15 @@
           v-for="(slide, i) in slides"
           :key="i"
           class="carousel-section__item"
+          :class="{ 'carousel-section__item--loaded': loadedIndices.has(i) }"
+          :style="{ '--i': i }"
         >
           <template v-if="typeof slide === 'string'">
             <img
               :src="slide"
               alt=""
               class="carousel-section__img"
+              @load="onImageLoad(i)"
               @click="lightboxSrc = slide"
             />
           </template>
@@ -40,6 +43,11 @@ defineProps<{
 }>()
 
 const lightboxSrc = ref<string | null>(null)
+const loadedIndices = ref<Set<number>>(new Set())
+
+function onImageLoad(i: number) {
+  loadedIndices.value = new Set([...loadedIndices.value, i])
+}
 
 function onKeydown(e: KeyboardEvent) {
   if (e.key === 'Escape') lightboxSrc.value = null
@@ -63,6 +71,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   gap: 0.75rem;
+  align-items: center;
 }
 
 @media (max-width: 900px) {
@@ -74,17 +83,64 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
 }
 
 .carousel-section__item {
+  --i: 0;
+  position: relative;
   min-width: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 14px;
+  padding: 4px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.5) 100%);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.04),
+    0 8px 24px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    background: linear-gradient(
+      160deg,
+      rgba(255, 255, 255, 0.97) 0%,
+      rgba(255, 255, 255, 0.6) 40%,
+      transparent 70%,
+      rgba(255, 255, 255, 0.2) 100%
+    );
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: calc(var(--i) * 45ms + 100ms);
+  }
+
+  &--loaded::after {
+    opacity: 0;
+  }
 }
 
 .carousel-section__img {
   width: 100%;
   aspect-ratio: 170 / 250;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 10px;
   cursor: pointer;
+  transform: scale(1.1);
+  opacity: 0;
+  transition:
+    opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: calc(var(--i) * 45ms);
+
+  .carousel-section__item--loaded & {
+    opacity: 1;
+    transform: scale(1.1);
+  }
 
   &--placeholder {
+    opacity: 1;
     background: linear-gradient(135deg, $color-accent 0%, $color-pistachio 100%);
   }
 }
