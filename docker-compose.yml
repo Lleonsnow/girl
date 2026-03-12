@@ -1,15 +1,16 @@
 services:
   nginx:
-    profiles:
-      - prod
+#    profiles:
+#      - prod
     build: ./nginx
     ports:
       - "80:80"
     volumes:
       - static_files:/var/www/static:ro
+      - media_files:/var/www/media:ro
     depends_on:
       - backend
-      - frontend
+#      - frontend
 
   postgres:
     image: postgres:16-alpine
@@ -30,6 +31,8 @@ services:
       - "8000:8000"
     volumes:
       - static_files:/app/staticfiles
+      - media_files:/app/media
+      - ./frontend/public:/seed_src:ro
     env_file: ./backend/.env
     environment:
       - POSTGRES_HOST=postgres
@@ -47,4 +50,5 @@ services:
 
 volumes:
   static_files:
+  media_files:
   postgres_data:
