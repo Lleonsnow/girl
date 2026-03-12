@@ -1,12 +1,12 @@
 <template>
   <div class="my-container page">
     <h1 class="page__title">{{ t('pages.termsTitle') }}</h1>
-    <p class="page__meta">{{ t('terms.siteLabel') }} {{ t('terms.effectiveDate') }}</p>
+    <p class="page__meta">{{ t('terms.siteLabel', { siteUrl: siteConfig.siteUrl }) }} {{ t('terms.effectiveDate') }}</p>
     <div class="page__body">
       <section class="terms-section">
         <h2 class="terms-section__title">{{ t('terms.s1Title') }}</h2>
-        <p>{{ t('terms.s1P1') }}</p>
-        <p>{{ t('terms.s1P2') }}</p>
+        <p>{{ t('terms.s1P1', { siteUrl: siteConfig.siteUrl }) }}</p>
+        <p>{{ t('terms.s1P2', { siteOwner: siteConfig.siteOwnerNameLocalized }) }}</p>
         <p>{{ t('terms.s1P3') }}</p>
         <p>{{ t('terms.s1P4') }}</p>
       </section>
@@ -71,6 +71,7 @@
 
 <script setup lang="ts">
 const { t } = useI18n()
+const siteConfig = useSiteConfigStore()
 </script>
 
 <style lang="scss" scoped>

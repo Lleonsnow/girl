@@ -1,7 +1,7 @@
 <template>
   <footer class="footer">
     <div class="my-container footer__inner">
-      <p class="footer__copy">© {{ year }} {{ siteName }}</p>
+      <p class="footer__copy">© {{ year }} {{ displayName }}</p>
       <nav v-if="links.length" class="footer__links">
         <NuxtLink v-for="link in links" :key="link.to" :to="link.to" class="footer__link">{{ link.label }}</NuxtLink>
       </nav>
@@ -15,14 +15,15 @@ interface FooterLink {
   label: string
 }
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     siteName?: string
     links?: FooterLink[]
   }>(),
-  { siteName: 'My Anesthesia', links: () => [] }
+  { siteName: '', links: () => [] }
 )
-
+const siteConfig = useSiteConfigStore()
+const displayName = computed(() => props.siteName || siteConfig.authorPseudonym)
 const year = new Date().getFullYear()
 </script>
 

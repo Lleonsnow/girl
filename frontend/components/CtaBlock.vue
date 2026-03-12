@@ -7,7 +7,8 @@
       </div>
       <div class="cta-block__content">
         <p class="cta-block__text">{{ text }}</p>
-        <NuxtLink v-if="chatLink" :to="chatLink" class="cta-block__btn">{{ buttonLabel }}</NuxtLink>
+        <button v-if="openPopup" type="button" class="cta-block__btn" @click="$emit('cta-click')">{{ buttonLabel }}</button>
+        <NuxtLink v-else-if="chatLink" :to="chatLink" class="cta-block__btn">{{ buttonLabel }}</NuxtLink>
         <a v-else-if="chatHref" :href="chatHref" target="_blank" rel="noopener noreferrer" class="cta-block__btn">{{ buttonLabel }}</a>
       </div>
     </div>
@@ -22,15 +23,19 @@ withDefaults(
     thumbSrc?: string
     chatLink?: string
     chatHref?: string
+    openPopup?: boolean
   }>(),
-  { buttonLabel: 'Начать чат' }
+  { buttonLabel: 'Начать чат', openPopup: false }
 )
+defineEmits<{ (e: 'cta-click'): void }>()
 </script>
 
 <style lang="scss" scoped>
+@use "sass:color";
 .cta-block {
   padding: 1.5rem 0;
-  background: rgba($color-pistachio, 0.12);
+  background: color.mix($color-pistachio, $color-bg, 18%);
+  border-radius: 8px;
 }
 
 .cta-block__inner {
@@ -44,8 +49,8 @@ withDefaults(
 
 .cta-block__thumb-wrap {
   flex-shrink: 0;
-  width: 150px;
-  height: 150px;
+  width: 85px;
+  height: 85px;
   border-radius: 8px;
   overflow: hidden;
   aspect-ratio: 1;
@@ -88,17 +93,24 @@ withDefaults(
   min-width: 500px;
   height: 70px;
   padding: 0 1.25rem;
+  border: none;
+  border-radius: 8px;
   background: $color-olive;
   color: $color-white;
-  border-radius: 8px;
   @include headingBaseStyle(text-small);
   font-size: 1.125rem;
   font-weight: 600;
   text-decoration: none;
   transition: background 0.2s;
+  cursor: pointer;
+  font-family: inherit;
 
   &:hover {
     background: $color-main-dark;
+  }
+
+  &:focus {
+    outline: none;
   }
 }
 </style>
